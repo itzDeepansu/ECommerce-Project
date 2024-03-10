@@ -29,8 +29,8 @@ import { toast } from "sonner";
 
 const ItemCart = () => {
   const dispatch = useDispatch();
-  const cartItemsList = useSelector((state) => state.cartItems);
-  const totalprice = useSelector((state) => state.cartValue);
+  const cartItemsList = useSelector((state) => state.cart.cartItems);
+  const totalprice = useSelector((state) => state.cart.cartValue);
   function findfinalprice(item) {
     return Math.floor(
       item.price - (item.discountPercentage * item.price) / 100
@@ -75,10 +75,10 @@ const ItemCart = () => {
             </SheetDescription>
           </SheetHeader>
           <ScrollArea className="h-[80vh] rounded-md border px-3">
-            {cartItemsList.length == 1 && (
+            {cartItemsList?.length == 1 && (
               <div className="mt-4">Your Cart is Empty</div>
             )}
-            {cartItemsList.slice(1).map((item) => (
+            {cartItemsList?.slice(1).map((item) => (
               <Card key={item.id} className="mt-4">
                 <CardHeader className="flex flex-row gap-4 items-center">
                   <img

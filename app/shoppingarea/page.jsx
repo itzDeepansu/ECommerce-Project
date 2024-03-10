@@ -8,11 +8,19 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { addItem } from "@/features/cart/cartSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import ItemCart from "@/components/ItemCart";
 import { toast } from "sonner";
 
@@ -21,17 +29,31 @@ const page = () => {
   const [data, setData] = useState([]);
   const [input, setinput] = useState("");
   const [search, setSearch] = useState([]);
+  // useEffect(() => {
+  //   fetch("https://dummyjson.com/products")
+  //     .then((res) => res.json())
+  //     .then((json) => {
+  //       setData(json.products);
+  //       setSearch(json.products);
+  //     });
+  // }, []);
   useEffect(() => {
-    fetch("https://dummyjson.com/products")
-      .then((res) => res.json())
-      .then((json) => {
-        setData(json.products);
-        setSearch(json.products);
-      });
+    async function getdata() {
+      let a = await fetch("https://dummyjson.com/products");
+      let b = await a.json();
+      setData(b.products);
+      setSearch(b.products);
+    }
+      getdata();
   }, []);
+
   const handleChange = (value) => {
     setinput(value);
-    setSearch(data.filter((item) => item.title.toLowerCase().includes(value.toLowerCase())));
+    setSearch(
+      data.filter((item) =>
+        item.title.toLowerCase().includes(value.toLowerCase())
+      )
+    );
   };
   const handleCartAddition = (product, e) => {
     e.preventDefault();
@@ -42,16 +64,73 @@ const page = () => {
       position: "bottom-center",
     });
   };
+  const handleCategoryChange = (val) => {
+    setSearch(data.filter((item) => item.category === val));
+  };
   return (
     <div className="w-4/5 gap-6 mx-auto flex flex-col items-center">
       <ItemCart />
-      <input
-        className="border-2 border-gray-300 bg-white h-10 rounded-lg text-sm focus:outline-none w-96 px-4"
-        type="text"
-        value={input}
-        onChange={(e) => handleChange(e.target.value)}
-        placeholder="Search"
-      />
+      <div className="flex relative w-full justify-center">
+        <input
+          className="border-2 border-gray-300 bg-white h-10 rounded-lg text-sm focus:outline-none w-96 px-4"
+          type="text"
+          value={input}
+          onChange={(e) => handleChange(e.target.value)}
+          placeholder="Search"
+        />
+        <DropdownMenu>
+          <DropdownMenuTrigger className="absolute right-7">
+            Open Categories
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuLabel>Categories</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
+              onClick={(e) =>
+                handleCategoryChange(e.target.innerText.toLowerCase())
+              }
+            >
+              Smartphones
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={(e) =>
+                handleCategoryChange(e.target.innerText.toLowerCase())
+              }
+            >
+              Laptops
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={(e) =>
+                handleCategoryChange(e.target.innerText.toLowerCase())
+              }
+            >
+              Fragrances
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={(e) =>
+                handleCategoryChange(e.target.innerText.toLowerCase())
+              }
+            >
+              Skincare
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={(e) =>
+                handleCategoryChange(e.target.innerText.toLowerCase())
+              }
+            >
+              Groceries
+            </DropdownMenuItem>
+            <DropdownMenuItem
+              onClick={(e) =>
+                handleCategoryChange(e.target.innerText.toLowerCase())
+              }
+            >
+              Home-Decoration
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </div>
+
       <ul className="flex flex-wrap gap-4 justify-evenly">
         {search.map((product) => (
           <li key={product.id}>
