@@ -9,19 +9,10 @@ import {
   MenubarShortcut,
   MenubarTrigger,
 } from "@/components/ui/menubar";
-import ItemCart from "./ItemCart";
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
 
 const Navbar = () => {
   return (
-    <div className="mb-4">
+    <div>
       <Menubar className="flex justify-around">
         <MenubarMenu>Logo</MenubarMenu>
         <MenubarMenu>
@@ -32,9 +23,7 @@ const Navbar = () => {
           </Menubar>
         </MenubarMenu>
         <MenubarMenu>
-          <Sheet>
-            <SheetTrigger>Cart</SheetTrigger>
-          </Sheet>
+          Github Repo
           </MenubarMenu>
       </Menubar>
     </div>

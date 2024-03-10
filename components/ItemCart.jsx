@@ -19,14 +19,13 @@ import {
 
 import { Button } from "@/components/ui/button";
 import MdiCart from "@/components/ui/cart";
-import { addItem, removeItem ,dropItem } from "@/features/cart/cartSlice";
+import { addItem, removeItem, dropItem } from "@/features/cart/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import PajamasRemove from "@/components/ui/remove";
 import IcTwotonePlus from "@/components/ui/plus";
 import IcTwotoneMinus from "./ui/minus";
-
-
+import { toast } from "sonner";
 
 const ItemCart = () => {
   const dispatch = useDispatch();
@@ -44,10 +43,24 @@ const ItemCart = () => {
   };
   const handleRemoveItem = (id) => {
     dispatch(removeItem(id));
+    toast.error("Item Removed SuccessFully", {
+      duration: 1000,
+      position: "bottom-center",
+      style:{
+        backgroundColor:"red"
+      }
+    });
   };
-  const handledropItem = (id) =>{
-    dispatch(dropItem(id))
-  }
+  const handledropItem = (id) => {
+    dispatch(dropItem(id));
+    toast.error("Item Dropped Successfully", {
+      duration: 1000,
+      position: "bottom-center",
+      style:{
+        backgroundColor:"red",
+      },
+    });
+  };
   return (
     <div>
       <Sheet>
@@ -79,9 +92,13 @@ const ItemCart = () => {
                       {item.details.stock > 0 ? (
                         <div className="text-green-500 flex gap-4">
                           In stock
-                          <IcTwotoneMinus onClick={()=>handleRemoveItem(item.id)}/>
+                          <IcTwotoneMinus
+                            onClick={() => handleRemoveItem(item.id)}
+                          />
                           <span>{item.quantity}</span>
-                          <IcTwotonePlus onClick={(e) => handleCartAddition(item.details, e)}/>
+                          <IcTwotonePlus
+                            onClick={(e) => handleCartAddition(item.details, e)}
+                          />
                         </div>
                       ) : (
                         <div className="text-red-500">Out of Stock</div>
