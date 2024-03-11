@@ -23,19 +23,23 @@ import { addItem } from "@/features/cart/cartSlice";
 import { useDispatch, useSelector } from "react-redux";
 import ItemCart from "@/components/ItemCart";
 import { toast } from "sonner";
-const page = () => {
+
+const page = ({ params }) => {
   const dispatch = useDispatch();
   const [data, setData] = useState([]);
   const [input, setinput] = useState("");
   const [search, setSearch] = useState([]);
   useEffect(() => {
-    fetch("https://dummyjson.com/products")
-      .then((res) => res.json())
-      .then((json) => {
-        setData(json.products);
-        setSearch(json.products);
-      });
+    async function getdata() {
+      let a = await fetch("https://dummyjson.com/products");
+      let b = await a.json();
+      setData(b.products.filter((item) => item.category === params.slug));
+    }
+    getdata();
   }, []);
+  useEffect(() => {
+    setSearch(data.filter((item) => item.category === params.slug));
+  }, [data]);
 
   const handleChange = (value) => {
     setinput(value);
@@ -57,6 +61,13 @@ const page = () => {
   const handleCategoryChange = (val) => {
     setSearch(data.filter((item) => item.category === val));
   };
+  // if (search.length === 0) {
+  //   return (
+  //     <div className="flex justify-center items-center text-4xl h-[60vh]">
+  //       No Items for {params.slug} category
+  //     </div>
+  //   );
+  // }
   return (
     <div className="w-4/5 gap-6 mx-auto flex flex-col items-center">
       <ItemCart />
@@ -75,47 +86,23 @@ const page = () => {
           <DropdownMenuContent>
             <DropdownMenuLabel>Categories</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem
-              onClick={(e) =>
-                handleCategoryChange(e.target.innerText.toLowerCase())
-              }
-            >
-              Smartphones
+            <DropdownMenuItem>
+              <Link href="/shoppingarea/smartphones">Smartphones</Link>
             </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={(e) =>
-                handleCategoryChange(e.target.innerText.toLowerCase())
-              }
-            >
-              Laptops
+            <DropdownMenuItem>
+              <Link href="/shoppingarea/laptops">Laptops</Link>
             </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={(e) =>
-                handleCategoryChange(e.target.innerText.toLowerCase())
-              }
-            >
-              Fragrances
+            <DropdownMenuItem>
+              <Link href="/shoppingarea/fragrances">Fragrances</Link>
             </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={(e) =>
-                handleCategoryChange(e.target.innerText.toLowerCase())
-              }
-            >
-              Skincare
+            <DropdownMenuItem>
+              <Link href="/shoppingarea/skincare">SkinCare</Link>
             </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={(e) =>
-                handleCategoryChange(e.target.innerText.toLowerCase())
-              }
-            >
-              Groceries
+            <DropdownMenuItem>
+              <Link href="/shoppingarea/groceries">Groceries</Link>
             </DropdownMenuItem>
-            <DropdownMenuItem
-              onClick={(e) =>
-                handleCategoryChange(e.target.innerText.toLowerCase())
-              }
-            >
-              Home-Decoration
+            <DropdownMenuItem>
+              <Link href="/shoppingarea/home-decoration">Home Decoration</Link>
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -125,11 +112,9 @@ const page = () => {
         {search.map((product) => (
           <li key={product.id}>
             <Link href={`/shoppingarea/items/${product.id}`}>
-              <Card className="group h-[420px] w-[370px] overflow-hidden flex flex-col relative hover:bg-slate-100 mb-4">
+              <Card className="h-[420px] w-[370px] overflow-hidden flex flex-col relative hover:bg-slate-100 mb-4">
                 <CardHeader>
-                  <div className="h-[200px] overflow-hidden flex justify-center"> 
-                  <img src={product.thumbnail} alt="" className="h-[200px] group-hover:scale-105 transition-all" />
-                  </div>
+                  <img src={product.thumbnail} alt="" className="h-[200px]" />
                   <CardTitle>{product.title}</CardTitle>
                 </CardHeader>
                 <CardContent className="h-10 overflow-hidden">
