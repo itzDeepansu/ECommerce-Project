@@ -6,6 +6,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import ItemCard from "@/components/ItemCard";
 import ItemCart from "@/components/ItemCart";
+import Navbar from "@/components/Navbar";
 export default function Home() {
   const [d, setd] = useState([]);
   const dispatch = useDispatch();
@@ -23,6 +24,7 @@ export default function Home() {
   }
   return (
     <>
+      <Navbar/>
       <ItemCart/>
       <div className="flex border-t justify-center mt-8">
         <div className="w-1/4 flex justify-center items-center border-r text-l font-medium">

@@ -21,6 +21,7 @@ const Navbar = () => {
             <Link href="/">Home</Link>
             <Link href="/shoppingarea">Shopping Area</Link>
             <Link href="/about">About</Link>
+            <Link href="/cart">Cart</Link>
           </Menubar>
         </MenubarMenu>
         <MenubarMenu>
