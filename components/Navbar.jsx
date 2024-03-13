@@ -10,6 +10,7 @@ import {
   MenubarTrigger,
 } from "@/components/ui/menubar";
 import { Button } from "./ui/button";
+import { UserButton } from "@clerk/nextjs";
 
 const Navbar = () => {
   return (
@@ -26,6 +27,7 @@ const Navbar = () => {
         </MenubarMenu>
         <MenubarMenu>
           <Button variant="outline" className="h-10">Github Repo</Button>
+          <UserButton />
           </MenubarMenu>
       </Menubar>
     </div>
