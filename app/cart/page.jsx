@@ -1,14 +1,14 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Navbar from "@/components/Navbar";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch, ReactReduxContext } from "react-redux";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import IcTwotonePlus from "@/components/ui/plus";
 import IcTwotoneMinus from "@/components/ui/minus";
 import { addItem, removeItem, dropItem } from "@/features/cart/cartSlice";
 import { toast } from "sonner";
-
+import { loadStripe } from "@stripe/stripe-js";
 const page = () => {
   const cartItems = useSelector((state) => state.cart.cartItems).slice(1);
   const cartValue = useSelector((state) => state.cart.cartValue);
@@ -51,6 +51,26 @@ const page = () => {
       },
     });
   };
+  const initiatepayment = async () => {
+    const stripe = await loadStripe(
+      "pk_test_51OuHN3SBkqxgA4Ck9y5pLhb0hYeN9VRokv6E53riXwukDh3weehyZOUj6Xe09ChM6rVSeDrTKcrtCFHXnia4d1aQ00aGw6ygeQ"
+    );
+    // `${process.env.STRIPE_PUBLISHABLE_KEY}`
+    const response = await fetch("api/add", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(cartItems),
+    });
+    const session = await response.json();
+    const result = await stripe.redirectToCheckout({
+      sessionId: session.id,
+    });
+    if (result.error) {
+      console.log(result.error.message);
+    }
+  };
   return (
     <div>
       <Navbar />
@@ -64,7 +84,7 @@ const page = () => {
         </ul>
         <div className="flex flex-col gap-5 h-[350px] overflow-y-scroll">
           {cartItems?.map((item) => (
-            <Card className="grid grid-cols-4 gap-60 rounded-none">
+            <Card className="grid grid-cols-4 gap-60 rounded-none" key="1">
               <div className="flex items-center">
                 <img src={item.details.thumbnail} alt="" className="h-20" />
                 {item.details.title}
@@ -94,7 +114,7 @@ const page = () => {
           <div className="flex">
             Total :<div className="ml-auto">{cartValue + shippingfee}</div>
           </div>
-          <Button>Proceed to Checkout</Button>
+          <Button onClick={initiatepayment}>Proceed to Checkout</Button>
         </div>
       </div>
     </div>
