@@ -18,8 +18,8 @@ export async function POST(request) {
     payment_method_types: ['card'],
     line_items: lineItems,
     mode: 'payment',
-    success_url: `https://localhost:3000/shoppingarea`,
-    cancel_url: `https://localhost:3000/cart`,
+    success_url: 'https://localhost:3000/cancel',
+    cancel_url: 'https://localhost:3000',
   });
   return NextResponse.json({ id: session.id });
 }

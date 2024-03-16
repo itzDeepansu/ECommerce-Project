@@ -15,7 +15,7 @@ import { UserButton } from "@clerk/nextjs";
 const Navbar = () => {
   return (
     <div>
-      <Menubar className="flex justify-around h-12">
+      <Menubar className="flex justify-evenly h-12">
         <MenubarMenu className="hover:bg-slate-500">Logo</MenubarMenu>
         <MenubarMenu>
           <Menubar className="flex justify-around w-96 rounded-none h-12">
@@ -26,9 +26,15 @@ const Navbar = () => {
           </Menubar>
         </MenubarMenu>
         <MenubarMenu>
-          <Button variant="outline" className="h-10">Github Repo</Button>
-          <UserButton />
-          </MenubarMenu>
+          <div className="flex gap-10">
+            <Button variant="outline" className="h-10">
+              Github Repo
+            </Button>
+            <div className="absolute right-5 flex justify-start items-center">
+              <UserButton />
+            </div>
+          </div>
+        </MenubarMenu>
       </Menubar>
     </div>
   );
