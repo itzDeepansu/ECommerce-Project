@@ -13,27 +13,47 @@ import { addItem } from "@/features/cart/cartSlice";
 import { useDispatch } from "react-redux";
 import ItemCart from "@/components/ItemCart";
 
-const page = ({ params }) => {
+import { toast } from "sonner";
+import CircleLoader from "react-spinners/CircleLoader";
+
+const Page = ({ params }) => {
   const dispatch = useDispatch();
-  const [images, setimages] = useState([]);
+  const [images, setImages] = useState([]);
   const [data, setData] = useState({});
+  const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     fetch(`https://dummyjson.com/products/${params.slug}`)
       .then((res) => res.json())
       .then((json) => {
         setData(json);
-        setimages(json.images);
+        setImages(json.images);
+        setLoading(false);
       });
-  }, []);
+  }, [params.slug]);
+
   const handleCartAddition = () => {
     dispatch(addItem(data));
+    toast.success("Item Added to Cart", {
+      duration: 1000,
+      position: "bottom-center",
+    });
   };
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <CircleLoader color="#F3A940" size={150} />
+      </div>
+    );
+  }
+
   return (
-    <div>
+    <>
       <Navbar />
       <div className="w-4/5 min-h-[89vh] m-auto flex gap-32">
         <div className="h-[89vh] w-4/12">
-          <Carousel className="h-[89vh]  flex items-center">
+          <Carousel className="h-[89vh] flex items-center">
             <CarouselContent>
               {images.map((imagelink) => (
                 <CarouselItem key={imagelink}>
@@ -52,22 +72,22 @@ const page = ({ params }) => {
         <div className="flex flex-col pt-20 w-8/12 gap-2">
           <div className="text-4xl">{data?.title}</div>
           <div className="text-xl border-b">{data?.description}</div>
-          <div className="text-xl ">
-            <span className="text-red-500">-{data?.discountPercentage}% </span>
+          <div className="text-xl">
             <span className="text-2xl">
               {"       "}$
               {Math.floor(
                 data.price - (data.discountPercentage * data.price) / 100
               )}
             </span>
+            <span className="text-red-500">      -{data?.discountPercentage}% </span>
           </div>
           <div className="text-xl">
-            In Stock :<span className="text-green-500">{data?.stock}</span>
+            In Stock: <span className="text-green-500">{data?.stock}</span>
           </div>
-          <div className="text-xl">Brand:{data?.brand}</div>
-          <div className="text-xl">Category:{data?.category}</div>
+          <div className="text-xl">Brand: {data?.brand}</div>
+          <div className="text-xl">Category: {data?.category}</div>
           <Button
-            className="mt-24 h-12 w-28 hover:bg-blue-400"
+            className="mt-24 h-12 w-28 hover:bg-orange-400"
             variant="outline"
             onClick={handleCartAddition}
           >
@@ -76,8 +96,8 @@ const page = ({ params }) => {
         </div>
         <ItemCart />
       </div>
-    </div>
+    </>
   );
 };
 
-export default page;
+export default Page;

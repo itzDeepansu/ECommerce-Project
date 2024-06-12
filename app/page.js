@@ -7,7 +7,10 @@ import { Button } from "@/components/ui/button";
 import ItemCard from "@/components/ItemCard";
 import ItemCart from "@/components/ItemCart";
 import Navbar from "@/components/Navbar";
+
+import CircleLoader from "react-spinners/CircleLoader"
 export default function Home() {
+  const [loading ,setLoading] = useState(true)
   const [d, setd] = useState([]);
   const dispatch = useDispatch();
   useEffect(() => {
@@ -17,10 +20,19 @@ export default function Home() {
         setd(json.products);
         dispatch(addItemindata(json.products));
       });
+      setLoading(false);
   }, []);
   const data = useSelector((state) => state.item.items);
   function generaterandomnumber() {
     return Math.floor(Math.random() * 10);
+  }
+
+  if(loading){
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <CircleLoader color="#F3A940" size={150} />
+      </div>
+    );
   }
   return (
     <>
@@ -29,19 +41,19 @@ export default function Home() {
       <div className="flex border-t justify-center mt-8">
         <div className="w-1/4 flex justify-center items-center border-r text-l font-medium">
           <ul className="h-[70vh] flex flex-col justify-between">
-            <Link href="/shoppingarea/men">Men's Fashion</Link>
-            <Link href="/shoppingarea/women">Women's Fashion</Link>
-            <Link href="/shoppingarea/medicine">Medicine</Link>
-            <Link href="/shoppingarea/smartphones">Smartphones</Link>
-            <Link href="/shoppingarea/laptops">Laptops</Link>
-            <Link href="/shoppingarea/fragrances">Fragrances</Link>
-            <Link href="/shoppingarea/skincare">SkinCare</Link>
-            <Link href="/shoppingarea/groceries">Groceries</Link>
-            <Link href="/shoppingarea/home-decoration">Home Decoration</Link>
+            <Link href="/shoppingarea/men" className="hover:bg-orange-400 h-10 p-2 rounded-md">Men's Fashion</Link>
+            <Link href="/shoppingarea/women" className="hover:bg-orange-400 h-10 p-2 rounded-md">Women's Fashion</Link>
+            <Link href="/shoppingarea/medicine" className="hover:bg-orange-400 h-10 p-2 rounded-md">Medicine</Link>
+            <Link href="/shoppingarea/smartphones" className="hover:bg-orange-400 h-10 p-2 rounded-md">Smartphones</Link>
+            <Link href="/shoppingarea/laptops" className="hover:bg-orange-400 h-10 p-2 rounded-md">Laptops</Link>
+            <Link href="/shoppingarea/fragrances" className="hover:bg-orange-400 h-10 p-2 rounded-md">Fragrances</Link>
+            <Link href="/shoppingarea/skincare" className="hover:bg-orange-400 h-10 p-2 rounded-md">SkinCare</Link>
+            <Link href="/shoppingarea/groceries" className="hover:bg-orange-400 h-10 p-2 rounded-md">Groceries</Link>
+            <Link href="/shoppingarea/home-decoration" className="hover:bg-orange-400 h-10 p-2 rounded-md">Home Decoration</Link>
           </ul>
         </div>
         <div className="h-[80vh] flex justify-center items-center mx-auto">
-          <img src="/iphone14.jpg" alt="" className="h-[70vh]" />
+          <img src="/iphone14.jpg" alt="" className="h-[70vh] hover:scale-110 transition-transform" />
         </div>
       </div>
       <div className="w-5/6 mx-auto flex flex-col mt-14 gap-6 mb-10">

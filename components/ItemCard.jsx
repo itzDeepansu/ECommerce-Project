@@ -1,16 +1,11 @@
 import React from "react";
 import {
   Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
 } from "@/components/ui/card";
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { addItem } from "@/features/cart/cartSlice";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { toast } from "sonner";
 
 const ItemCard = ({ product }) => {

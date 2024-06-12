@@ -1,7 +1,7 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import Navbar from "@/components/Navbar";
-import { useSelector, useDispatch, ReactReduxContext } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import IcTwotonePlus from "@/components/ui/plus";
@@ -114,7 +114,9 @@ const page = () => {
           <div className="flex">
             Total :<div className="ml-auto">{cartValue + shippingfee}</div>
           </div>
-          <Button onClick={initiatepayment}>Proceed to Checkout</Button>
+          {cartValue !== 0 && (
+            <Button onClick={initiatepayment}>Proceed to Checkout</Button>
+          )}
         </div>
       </div>
     </div>

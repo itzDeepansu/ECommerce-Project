@@ -62,6 +62,7 @@ const page = ({ params }) => {
   const handleCategoryChange = (val) => {
     setSearch(data.filter((item) => item.category === val));
   };
+
   return (
     <div>
       <Navbar />
@@ -106,6 +107,10 @@ const page = ({ params }) => {
           </DropdownMenu>
         </div>
 
+        {search.length === 0 && (
+          <div className="text-center text-2xl">No Products Found</div>
+        )}
+
         <ul className="flex flex-wrap gap-4 justify-evenly">
           {search.map((product) => (
             <li key={product.id}>
@@ -121,7 +126,7 @@ const page = ({ params }) => {
                   <CardFooter className="absolute bottom-0">
                     <div>${product.price}</div>
                     <Button
-                      className="ml-40 hover:bg-blue-400"
+                      className="ml-40 hover:bg-orange-400"
                       variant="outline"
                       onClick={(e) => handleCartAddition(product, e)}
                     >

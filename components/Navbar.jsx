@@ -2,12 +2,7 @@ import React from "react";
 import Link from "next/link";
 import {
   Menubar,
-  MenubarContent,
-  MenubarItem,
   MenubarMenu,
-  MenubarSeparator,
-  MenubarShortcut,
-  MenubarTrigger,
 } from "@/components/ui/menubar";
 import { Button } from "./ui/button";
 import { UserButton } from "@clerk/nextjs";
@@ -18,11 +13,11 @@ const Navbar = () => {
       <Menubar className="flex justify-evenly h-12">
         <MenubarMenu className="hover:bg-slate-500">Logo</MenubarMenu>
         <MenubarMenu>
-          <Menubar className="flex justify-around w-96 rounded-none h-12">
-            <Link href="/">Home</Link>
-            <Link href="/shoppingarea">Shopping Area</Link>
-            <Link href="/about">About</Link>
-            <Link href="/cart">Cart</Link>
+          <Menubar className="flex justify-around w-96 rounded-none h-12 ">
+            <Link href="/" className="hover:bg-orange-400 p-2 rounded-md">Home</Link>
+            <Link href="/shoppingarea" className="hover:bg-orange-400 p-2 rounded ">Shopping Area</Link>
+            <Link href="/about" className="hover:bg-orange-400 p-2 rounded ">About</Link>
+            <Link href="/cart" className="hover:bg-orange-400 p-2 rounded ">Cart</Link>
           </Menubar>
         </MenubarMenu>
         <MenubarMenu>

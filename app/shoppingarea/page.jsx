@@ -24,11 +24,13 @@ import { useDispatch } from "react-redux";
 import ItemCart from "@/components/ItemCart";
 import { toast } from "sonner";
 import Navbar from "@/components/Navbar";
+import CircleLoader from "react-spinners/CircleLoader";
 const page = () => {
   const dispatch = useDispatch();
   const [data, setData] = useState([]);
   const [input, setinput] = useState("");
   const [search, setSearch] = useState([]);
+  const [loading, setLoading] = useState(true);
   useEffect(() => {
     fetch("https://dummyjson.com/products")
       .then((res) => res.json())
@@ -36,6 +38,8 @@ const page = () => {
         setData(json.products);
         setSearch(json.products);
       });
+
+    setLoading(false);
   }, []);
 
   const handleChange = (value) => {
@@ -55,6 +59,13 @@ const page = () => {
       position: "bottom-center",
     });
   };
+  if(loading){
+    return (
+      <div className="flex justify-center items-center min-h-screen">
+        <CircleLoader color="#F3A940" size={150} />
+      </div>
+    );
+  }
   return (
     <div>
       <Navbar />
@@ -103,7 +114,7 @@ const page = () => {
           {search.map((product) => (
             <li key={product.id}>
               <Link href={`/shoppingarea/items/${product.id}`}>
-                <Card className="group h-[420px] w-[370px] overflow-hidden flex flex-col relative hover:bg-slate-100 mb-4">
+                <Card className="group h-[420px] w-[370px] overflow-hidden flex flex-col relative hover:bg-orange-100 mb-4">
                   <CardHeader>
                     <div className="h-[200px] overflow-hidden flex justify-center">
                       <img
@@ -120,7 +131,7 @@ const page = () => {
                   <CardFooter className="absolute bottom-0">
                     <div>${product.price}</div>
                     <Button
-                      className="ml-40 hover:bg-blue-400"
+                      className="ml-40 hover:bg-orange-400"
                       variant="outline"
                       onClick={(e) => handleCartAddition(product, e)}
                     >

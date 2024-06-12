@@ -1,10 +1,8 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import {
   Card,
-  CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -17,6 +15,8 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 
+import { useRouter } from "next/navigation";
+
 import { Button } from "@/components/ui/button";
 import MdiCart from "@/components/ui/cart";
 import { addItem, removeItem, dropItem } from "@/features/cart/cartSlice";
@@ -28,6 +28,9 @@ import IcTwotoneMinus from "./ui/minus";
 import { toast } from "sonner";
 
 const ItemCart = () => {
+
+  const router = useRouter()
+
   const dispatch = useDispatch();
   const cartItemsList = useSelector((state) => state.cart.cartItems);
   const totalprice = useSelector((state) => state.cart.cartValue);
@@ -74,7 +77,7 @@ const ItemCart = () => {
               It contains all the items that you want to buy
             </SheetDescription>
           </SheetHeader>
-          <ScrollArea className="h-[80vh] rounded-md border px-3">
+          <ScrollArea className="h-[77vh] rounded-md border px-3">
             {cartItemsList?.length == 1 && (
               <div className="mt-4">Your Cart is Empty</div>
             )}
@@ -116,8 +119,9 @@ const ItemCart = () => {
               </Card>
             ))}
           </ScrollArea>
-          <div className="pt-4">
-            <SheetTitle>Total Price :{totalprice}</SheetTitle>
+          <div className="flex flex-col ">
+            <SheetTitle>Total Price : ${totalprice}</SheetTitle>
+            <Button onClick={() => router.push("/cart")} className="h-12">Checkout</Button>
           </div>
         </SheetContent>
       </Sheet>

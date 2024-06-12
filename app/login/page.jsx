@@ -1,5 +1,5 @@
 "use client";
-import React , {useEffect,useCallback} from "react";
+import React , {useEffect} from "react";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
 const page = () => {
@@ -52,9 +52,8 @@ const page = () => {
             )}
             <input
               type="submit"
-              className="h-9"
               value="Log In"
-              className="my-4 rounded-full bg-blue-500 m-auto py-3 px-6 cursor-pointer text-white"
+              className="my-4 rounded-full bg-blue-500 m-auto py-3 px-6 cursor-pointer text-white h-9"
             />
           </form>
           <div className="m-auto">
