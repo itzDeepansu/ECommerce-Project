@@ -115,9 +115,9 @@ const page = ({ params }) => {
           {search.map((product) => (
             <li key={product.id}>
               <Link href={`/shoppingarea/items/${product.id}`}>
-                <Card className="h-[420px] w-[370px] overflow-hidden flex flex-col relative hover:bg-slate-100 mb-4">
+                <Card className="group h-[420px] w-[370px] overflow-hidden flex flex-col relative hover:bg-orange-100 mb-4">
                   <CardHeader>
-                    <img src={product.thumbnail} alt="" className="h-[200px]" />
+                    <img src={product.thumbnail} alt="" className="h-[200px] group-hover:scale-105 transition-all" />
                     <CardTitle>{product.title}</CardTitle>
                   </CardHeader>
                   <CardContent className="h-10 overflow-hidden">

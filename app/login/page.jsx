@@ -2,6 +2,8 @@
 import React , {useEffect} from "react";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
+import {signIn } from "next-auth/react"
+import { useRouter } from "next/navigation";
 const page = () => {
   const {
     register,
@@ -10,7 +12,16 @@ const page = () => {
     reset,
     formState: { errors ,isSubmitSuccessful  },
   } = useForm();
-  const onSubmit = (data) => console.log(data);
+  const router = useRouter();
+  const onSubmit = (data) => {
+    signIn("credentials", {
+      ...data , redirect:false
+    }).then(()=>{
+      router.push("/")
+    }).catch((error)=>{
+      console.log(error)
+    })
+  };
   useEffect(() => {
     reset();
   }, [isSubmitSuccessful])

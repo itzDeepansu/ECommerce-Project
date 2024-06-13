@@ -8,8 +8,9 @@ import IcTwotonePlus from "@/components/ui/plus";
 import IcTwotoneMinus from "@/components/ui/minus";
 import { addItem, removeItem, dropItem } from "@/features/cart/cartSlice";
 import { toast } from "sonner";
-import { loadStripe } from "@stripe/stripe-js";
-const page = () => {
+// import { loadStripe } from "@stripe/stripe-js";
+import Link from "next/link";
+const page = () => {  
   const cartItems = useSelector((state) => state.cart.cartItems).slice(1);
   const cartValue = useSelector((state) => state.cart.cartValue);
   const shippingfee = 0;
@@ -51,26 +52,26 @@ const page = () => {
       },
     });
   };
-  const initiatepayment = async () => {
-    const stripe = await loadStripe(
-      "pk_test_51OuHN3SBkqxgA4Ck9y5pLhb0hYeN9VRokv6E53riXwukDh3weehyZOUj6Xe09ChM6rVSeDrTKcrtCFHXnia4d1aQ00aGw6ygeQ"
-    );
-    // `${process.env.STRIPE_PUBLISHABLE_KEY}`
-    const response = await fetch("api/add", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(cartItems),
-    });
-    const session = await response.json();
-    const result = await stripe.redirectToCheckout({
-      sessionId: session.id,
-    });
-    if (result.error) {
-      console.log(result.error.message);
-    }
-  };
+  // const initiatepayment = async () => {
+  //   const stripe = await loadStripe(
+  //     "pk_test_51OuHN3SBkqxgA4Ck9y5pLhb0hYeN9VRokv6E53riXwukDh3weehyZOUj6Xe09ChM6rVSeDrTKcrtCFHXnia4d1aQ00aGw6ygeQ"
+  //   );
+  //   // `${process.env.STRIPE_PUBLISHABLE_KEY}`
+  //   const response = await fetch("api/add", {
+  //     method: "POST",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //     },
+  //     body: JSON.stringify(cartItems),
+  //   });
+  //   const session = await response.json();
+  //   const result = await stripe.redirectToCheckout({
+  //     sessionId: session.id,
+  //   });
+  //   if (result.error) {
+  //     console.log(result.error.message);
+  //   }
+  // };
   return (
     <div>
       <Navbar />
@@ -82,7 +83,7 @@ const page = () => {
           <li>Quantity</li>
           <li>SubTotal</li>
         </ul>
-        <div className="flex flex-col gap-5 h-[350px] overflow-y-scroll">
+        <div className="flex flex-col gap-5 h-[300px] overflow-y-scroll">
           {cartItems?.map((item) => (
             <Card className="grid grid-cols-4 gap-60 rounded-none" key="1">
               <div className="flex items-center">
@@ -115,8 +116,9 @@ const page = () => {
             Total :<div className="ml-auto">{cartValue + shippingfee}</div>
           </div>
           {cartValue !== 0 && (
-            <Button onClick={initiatepayment}>Proceed to Checkout</Button>
+          <Link href="/cart/checkout" className="hover:bg-orange-400 p-2 rounded bg-black text-white">Proceed to Checkout</Link>
           )}
+        {/* <Button onClick={initiatepayment}>Proceed to Checkout</Button> */}
         </div>
       </div>
     </div>

@@ -53,12 +53,12 @@ export default function Home() {
           </ul>
         </div>
         <div className="h-[80vh] flex justify-center items-center mx-auto">
-          <img src="/iphone14.jpg" alt="" className="h-[70vh] hover:scale-110 transition-transform" />
+          <img src="/iphone14.jpg" alt="" className="h-[70vh] hover:scale-105 transition-transform" />
         </div>
       </div>
-      <div className="w-5/6 mx-auto flex flex-col mt-14 gap-6 mb-10">
+      <div className="w-5/6 mx-auto flex flex-col mt-14 mb-10">
         <div className="text-red-600">Today's</div>
-        <div className="text-5xl font-medium">Flash Sales</div>
+        <div className="text-5xl font-medium mb-6">Flash Sales</div>
         <div className="flex flex-nowrap overflow-x-scroll gap-2 no-scrollbar ">
           {Array.from({ length: 10 }).map((_, index) => (
             <div key={index} className="w-64">
@@ -66,8 +66,8 @@ export default function Home() {
             </div>
           ))}
         </div>
-        <Link href="/shoppingarea" className="flex items-center">
-          <Button className="bg-red-500 text-white rounded-none h-12 mx-auto">View All Products</Button>
+        <Link href="/shoppingarea" className="flex items-center mt-6">
+          <Button className="bg-orange-500 text-white rounded-none h-12 mx-auto">View All Products</Button>
         </Link>
       </div>
     </>

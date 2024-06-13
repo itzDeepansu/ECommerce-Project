@@ -67,7 +67,7 @@ const ItemCart = () => {
   return (
     <div>
       <Sheet>
-        <SheetTrigger className="bg-slate-400 fixed right-4 bottom-4 rounded-full h-16 w-16 flex items-center justify-center">
+        <SheetTrigger className="bg-orange-400 fixed right-4 bottom-4 rounded-full h-16 w-16 flex items-center justify-center">
           <MdiCart />
         </SheetTrigger>
         <SheetContent className="p-2">
@@ -91,7 +91,7 @@ const ItemCart = () => {
                   />
                   <CardTitle className="flex flex-col text-sm">
                     {item.details.title}
-                    <CardDescription>
+                    <div>
                       {item.details.stock > 0 ? (
                         <div className="text-green-500 flex gap-4">
                           In stock
@@ -106,7 +106,7 @@ const ItemCart = () => {
                       ) : (
                         <div className="text-red-500">Out of Stock</div>
                       )}
-                    </CardDescription>
+                    </div>
                     <div>${findfinalprice(item.details)}</div>
                   </CardTitle>
                   <Button
@@ -121,7 +121,7 @@ const ItemCart = () => {
           </ScrollArea>
           <div className="flex flex-col ">
             <SheetTitle>Total Price : ${totalprice}</SheetTitle>
-            <Button onClick={() => router.push("/cart")} className="h-12">Checkout</Button>
+            <Button onClick={() => router.push("/cart")} className="h-12 hover:bg-orange-400">Checkout</Button>
           </div>
         </SheetContent>
       </Sheet>

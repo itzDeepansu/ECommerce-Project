@@ -128,10 +128,10 @@ const page = () => {
                   <CardContent className="h-10 overflow-hidden">
                     <CardDescription>{product.description}</CardDescription>
                   </CardContent>
-                  <CardFooter className="absolute bottom-0">
+                  <CardFooter className="absolute bottom-0 w-full flex justify-between">
                     <div>${product.price}</div>
                     <Button
-                      className="ml-40 hover:bg-orange-400"
+                      className="hover:bg-orange-400"
                       variant="outline"
                       onClick={(e) => handleCartAddition(product, e)}
                     >
